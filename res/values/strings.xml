@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NSettings</string>
+    <string name="aboutL">About</string>
+    <string name="prefsL">Preferences</string>
+    <string name="helpMenuL">Help</string>
+    <string name="aboutT">NSettings is a program where you can change your system settings from your status bar via a notification. I would like to say a thank you to the members of stackoverflow.com for their help on some road bumps I have came across during the development of this app.</string>
+    <string name="helpT"></string>
+    <string name="togglesL">Toggles</string>
+    <string name="airplane_mode_summary">Turn all wireless comunications on and off</string>
+    <color name="white_color">#fff</color>
+    <color name="gray_color">#aaa</color>
+</resources>

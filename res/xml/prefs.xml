@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+<CheckBoxPreference android:title="Enable" android:key="enable" android:summary="Turns NSettings on." />
+<CheckBoxPreference android:title="Icon" android:key="icon" android:summary="Shows an icon in the status bar." android:dependency="enable" />
+<CheckBoxPreference android:title="Start on bootup" android:key="bootup" android:summary="Have the notification show when your device boots" android:dependency="enable" />
+</PreferenceScreen>

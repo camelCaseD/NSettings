@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Wireless Communications"></PreferenceCategory>
+    <CheckBoxPreference android:title="Wifi" android:key="wifi" android:summary="Turns wifi on and off" android:widgetLayout="@layout/wifi_check_pref"></CheckBoxPreference>
+    <CheckBoxPreference android:title="Bluetooth" android:key="bluetooth" android:summary="Turns your bluetooth on and off" android:widgetLayout="@layout/bluetooth_check_pref"></CheckBoxPreference>
+    <CheckBoxPreference android:title="Airplane" android:key="airplane" android:summary="Turns all wirless communications on and off" android:widgetLayout="@layout/airplane_check_pref"></CheckBoxPreference>
+    <CheckBoxPreference android:title="GPS" android:key="gps" android:summary="Turns GPS on and off" android:widgetLayout="@layout/gps_check_pref"></CheckBoxPreference>
+    <PreferenceCategory android:title="Audio Settings" android:key="audCat">
+        <CheckBoxPreference android:title="RingerMode" android:key="ringerMode" android:summary="Makes Phone Silent or Normal" android:widgetLayout="@layout/ringer_mode_check_pref"></CheckBoxPreference>
+    	<CheckBoxPreference android:title="Vibrate" android:key="vibrate" android:summary="Turns Vibrate Mode On and Off" android:widgetLayout="@layout/vibrate_check_pref" android:dependency="ringerMode"></CheckBoxPreference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Display Settings" android:key="displayCat">
+    	<CheckBoxPreference android:title="Auto screen brightness" android:summary="When checked will automatically detect screen brightness" android:key="autoScreen" />
+    </PreferenceCategory>
+    
+</PreferenceScreen>
