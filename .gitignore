@@ -2,3 +2,5 @@ build
 .settings
 import-summary.txt
 local.properties
+.idea
+.gradle
