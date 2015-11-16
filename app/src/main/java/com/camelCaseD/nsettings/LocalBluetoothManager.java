@@ -63,8 +63,6 @@ public class LocalBluetoothManager {
         } else {
             bluetoothState = BluetoothAdapter.ERROR;
         }
-
-        
     }
 
     public void setBluetoothEnabled(boolean enabled) {
@@ -72,16 +70,13 @@ public class LocalBluetoothManager {
                 ? mAdapter.enable()
                 : mAdapter.disable();
 
-        if (wasSetStateSuccessful) {
-            
-        } else {
-            if (V) {
+        if (!wasSetStateSuccessful) {
+           if (V) {
                 Log.v(TAG,
                         "setBluetoothEnabled call, manager didn't return success for enabled: "
                                 + enabled);
-            }
-
-            syncBluetoothState();
+           }
+           syncBluetoothState();
         }
     }
 }

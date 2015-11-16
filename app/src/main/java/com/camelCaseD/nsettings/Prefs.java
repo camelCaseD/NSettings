@@ -29,64 +29,62 @@ public class Prefs extends PreferenceActivity {
 	public CheckBoxPreference bootup = (CheckBoxPreference) findPreference(BOOTUP_KEY);
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState){
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.prefs);
 		
 		Preference enable = findPreference(ENABLE_KEY);
-        enable
-                        .setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        enable.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			public boolean onPreferenceClick(Preference preference) {
+				if (getEnable(getBaseContext())) {
+					notifyNS("NSettings Enabled", R.drawable.blank_32_x_32);
+				} else {
+					if (getIcon(getBaseContext())) {
+						setCheckedNS("icon", false);
+					}
 
-                                public boolean onPreferenceClick(Preference preference) {
-                                	if(getEnable(getBaseContext())){
-                                		notifyNS("NSettings Enabled", R.drawable.blank_32_x_32);
-                                	}else{
-                                		if(getIcon(getBaseContext())){
-                                			setCheckedNS("icon", false);
-                                		}
-                                		if(getBootup(getBaseContext())){
-                                			setCheckedNS("bootup", false);
-                                		}
-                                		cancelNS();
-                                	}
-									return true;
-                                }
-                        });
+					if (getBootup(getBaseContext())) {
+						setCheckedNS("bootup", false);
+					}
+
+					cancelNS();
+				}
+
+				return true;
+			}
+		});
         
         Preference icon = findPreference(ICON_KEY);
-        icon
-        				.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+        icon.setOnPreferenceClickListener(new OnPreferenceClickListener(){
         						public boolean onPreferenceClick(Preference preference){
-        							if(getIcon(getBaseContext())){
-        								notifyNS("Icon Changed", R.drawable.n);
-        							}else{
-        								notifyNS("Icon Changed", R.drawable.blank_32_x_32);
-        							}
-        							return true;
-        						}
+			if (getIcon(getBaseContext())) {
+				notifyNS("Icon Changed", R.drawable.n);
+			} else {
+				notifyNS("Icon Changed", R.drawable.blank_32_x_32);
+			}
 
-        				});
+			return true;
+				}
+
+		});
         
         Preference bootup = findPreference(BOOTUP_KEY);
         
-        bootup
-        				.setOnPreferenceClickListener(new OnPreferenceClickListener(){
+        bootup.setOnPreferenceClickListener(new OnPreferenceClickListener(){
 							public boolean onPreferenceClick(Preference preference) {
-								if(getBootup(getBaseContext())){
-									BSTATE = true;
-									Log.i("Prefs", "bState: " + BSTATE);
-								}else{
-									BSTATE = false;
-									Log.i("Prefs", "bState: " + BSTATE);
-								}
-								return true;
-							}
-        				});
-		
+				if(getBootup(getBaseContext())){
+					BSTATE = true;
+					Log.i("Prefs", "bState: " + BSTATE);
+				}else{
+					BSTATE = false;
+					Log.i("Prefs", "bState: " + BSTATE);
+				}
+				return true;
+			}
+		});
 	}
 	
-	public void setCheckedNS(String string,
-			boolean b) {
+	public void setCheckedNS(String string, boolean b) {
 		CheckBoxPreference method = (CheckBoxPreference) findPreference(string);
 		
 		method.setChecked(b);
@@ -140,7 +138,6 @@ public class Prefs extends PreferenceActivity {
 
 		Toast toast = Toast.makeText(context, text, duration);
 		toast.show();
-		
 	}
 
 
@@ -154,43 +151,44 @@ public class Prefs extends PreferenceActivity {
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch(item.getItemId()){
-		case R.id.homeM:
-			startActivity(new Intent(this, NSettings.class));
-			return true;
+		switch (item.getItemId()) {
+			case R.id.homeM:
+				startActivity(new Intent(this, NSettings.class));
+				return true;
 		}
+
 		return false;
 	}
 	
-	public static boolean getEnable(Context context){
+	public static boolean getEnable(Context context) {
 		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(ENABLE_KEY, ENABLE_TRUE);
 	}
 	
-	public static boolean getIcon(Context context){
+	public static boolean getIcon(Context context) {
 		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(ICON_KEY, ICON_TRUE);
 	}
 	
-	public static boolean getBootup(Context context){
+	public static boolean getBootup(Context context) {
 		return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(BOOTUP_KEY, BOOTUP_TRUE);
 	}
         
-        private void mainTogglesPref(Context context) {
-            int checked = 0;
-            
-            if(checked == 0) {
-                if(PreferenceManager.getDefaultSharedPreferences(context).getBoolean("wifiMT", true)) {
-                    checked = 1;
-                }else if(PreferenceManager.getDefaultSharedPreferences(context).getBoolean("airplaneMT", true)) {
-                    checked = 1;
-                }else if(PreferenceManager.getDefaultSharedPreferences(context).getBoolean("bluetoothMT", true)) {
-                    checked = 1;
-                }else if(PreferenceManager.getDefaultSharedPreferences(context).getBoolean("gpsMT", true)) {
-                    checked = 1;
-                }else if(PreferenceManager.getDefaultSharedPreferences(context).getBoolean("ringerModeMT", true)) {
-                    checked = 1;
-                }else if(PreferenceManager.getDefaultSharedPreferences(context).getBoolean("vibrateMT", true)) {
-                    checked = 1;
-                }
-            }
-        }
+	private void mainTogglesPref(Context context) {
+		int checked = 0;
+
+		if (checked == 0) {
+			if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("wifiMT", true)) {
+				checked = 1;
+			} else if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("airplaneMT", true)) {
+				checked = 1;
+			} else if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("bluetoothMT", true)) {
+				checked = 1;
+			} else if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("gpsMT", true)) {
+				checked = 1;
+			} else if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("ringerModeMT", true)) {
+				checked = 1;
+			} else if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("vibrateMT", true)) {
+				checked = 1;
+			}
+		}
+	}
 }

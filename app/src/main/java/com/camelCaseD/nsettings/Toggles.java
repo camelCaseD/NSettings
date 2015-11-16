@@ -78,17 +78,16 @@ public class Toggles extends PreferenceActivity implements Runnable {
         @Override
         public void onChange(boolean selfChange) {
             super.onChange(selfChange);
-//            if (ringerVol != null) {
-                Log.i("co", "co: active");
-                int volume = System.getInt(mCxt.getContentResolver(), System.VOLUME_SETTINGS[AudioManager.STREAM_RING], -1);
-                // Works around an atomicity problem with volume updates
-                // TODO: Fix the actual issue, probably in AudioService
-                if (volume >= 0) {
-                	Log.i("co", "if: active");
-                	Log.i("co", ""+volume);
-                    ringerVol.setProgress(volume);
-                }
-//            }
+
+            Log.i("co", "co: active");
+            int volume = System.getInt(mCxt.getContentResolver(), System.VOLUME_SETTINGS[AudioManager.STREAM_RING], -1);
+            // Works around an atomicity problem with volume updates
+            // TODO: Fix the actual issue, probably in AudioService
+            if (volume >= 0) {
+                Log.i("co", "if: active");
+                Log.i("co", ""+volume);
+                ringerVol.setProgress(volume);
+            }
         }
     };
 
@@ -113,8 +112,8 @@ public class Toggles extends PreferenceActivity implements Runnable {
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 				
         updateToggles();
-        
-     // listen for Location Manager settings changes
+
+        // listen for Location Manager settings changes
         Cursor settingsCursor = getContentResolver().query(Settings.Secure.CONTENT_URI, null,
                 "(" + NameValueTable.NAME + "=?)",
                 new String[]{Settings.Secure.LOCATION_PROVIDERS_ALLOWED},
@@ -122,7 +121,7 @@ public class Toggles extends PreferenceActivity implements Runnable {
         mContentQueryMap = new ContentQueryMap(settingsCursor, NameValueTable.NAME, true, null);
         mContentQueryMap.addObserver(new SettingsObserver());
         
-        if(!canToggleGPS()) {
+        if (!canToggleGPS()) {
         	getPreferenceScreen().removePreference(mGps);
         }
         
@@ -169,8 +168,7 @@ public class Toggles extends PreferenceActivity implements Runnable {
         //SeekBarPreferences change listeners
         ringerVol.setOnProgressChangeListener(new OnSeekBarChangeListener() {
 			  
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)  
-            {  
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 //change the volume, displaying a toast message containing the current volume and playing a feedback sound  
                 mAudioManager.setStreamVolume(AudioManager.STREAM_RING, progress, AudioManager.FLAG_SHOW_UI + AudioManager.FLAG_PLAY_SOUND);  
             }
@@ -184,12 +182,11 @@ public class Toggles extends PreferenceActivity implements Runnable {
 				// TODO Auto-generated method stub
 				
 			}
-        	
         });
+
         mediaVol.setOnProgressChangeListener(new OnSeekBarChangeListener() {
 			  
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)  
-            {  
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             	mAudioManager.setStreamVolume(AudioManager.STREAM_RING, progress, AudioManager.FLAG_SHOW_UI + AudioManager.FLAG_PLAY_SOUND);
             }
 
@@ -202,12 +199,11 @@ public class Toggles extends PreferenceActivity implements Runnable {
 				// TODO Auto-generated method stub
 				
 			}
-        	
         });
+
         screenBright.setOnProgressChangeListener(new OnSeekBarChangeListener() {
 			  
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)  
-            {  
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 backlightValue = (float) progress/100;
                 WindowManager.LayoutParams layoutParams = getWindow().getAttributes();
                 layoutParams.screenBrightness = backlightValue;
@@ -226,7 +222,6 @@ public class Toggles extends PreferenceActivity implements Runnable {
 				// TODO Auto-generated method stub
 				
 			}
-        	
         });
         
         displayCat.addPreference(screenBright);
@@ -264,10 +259,10 @@ public class Toggles extends PreferenceActivity implements Runnable {
         this.getContentResolver().unregisterContentObserver(mRingerVolumeObserver);
     }
     
-    private void turnGPSOn(){
+    private void turnGPSOn() {
         String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
 
-        if(!provider.contains("gps")){ //if gps is disabled
+        if (!provider.contains("gps")) { //if gps is disabled
             final Intent poke = new Intent();
             poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider"); 
             poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
@@ -276,10 +271,10 @@ public class Toggles extends PreferenceActivity implements Runnable {
         }
     }
 
-    private void turnGPSOff(){
+    private void turnGPSOff() {
         String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
 
-        if(provider.contains("gps")){ //if gps is enabled
+        if (provider.contains("gps")) { //if gps is enabled
             final Intent poke = new Intent();
             poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
             poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
@@ -293,50 +288,50 @@ public class Toggles extends PreferenceActivity implements Runnable {
             Preference preference) {
         if (preference == mGps) {
             boolean enabled = mGps.isChecked();
-            if(canToggleGPS()){
-            	if(enabled) {
+            if (canToggleGPS()) {
+            	if (enabled) {
             		CheckBoxPreference airplane = (CheckBoxPreference) findPreference("airplane");
-            		if(!airplane.isChecked()){
+            		if (!airplane.isChecked()) {
             			turnGPSOn();
             			mGps.setSummary("GPS On");
             		} else {
             			mGps.setChecked(false);
             		}
-            	}else{
+            	} else {
             		turnGPSOff();
             		mGps.setSummary("GPS Off");
             	}
             }
-        }else if(preference == mRingerMode) {
+        } else if (preference == mRingerMode) {
         	boolean enabled = mRingerMode.isChecked();
-        	if(enabled) {
+        	if (enabled) {
         		mAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
             	mRingerMode.setSummary("Phone is Now Silent");
-        	}else {
+        	} else {
         		mAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
         		mRingerMode.setSummary("Phone is Now Audible");
         		
-        		if(mVibrate.isChecked()) {
+        		if (mVibrate.isChecked()) {
         			mVibrate.setChecked(false);
         			mVibrate.setSummary("Phone Will Not Vibrate");
         		}
         	}
-        }else if(preference == mVibrate) {
+        } else if (preference == mVibrate) {
         	boolean enabled = mVibrate.isChecked();
-        	if(enabled) {
+        	if (enabled) {
         		setPhoneVibrateSettingValue(enabled);
         		mVibrate.setSummary("Phone Will Now Vibrate");
-        	}else {
+        	} else {
         		setPhoneVibrateSettingValue(enabled);
         		mVibrate.setSummary("Phone Will Not Vibrate");
         	}
-        }else if(preference == mAutoBright) {
+        } else if(preference == mAutoBright) {
         	boolean enabled = mAutoBright.isChecked();
-        	if(enabled) {
+        	if (enabled) {
         		 Settings.System.putInt(getBaseContext().getContentResolver(),
         	                Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
         		 mAutoBright.setSummary("Will now automatically detect screen brightness");
-        	} else{
+        	} else {
         		 Settings.System.putInt(getBaseContext().getContentResolver(),
         	                Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
         		 mAutoBright.setSummary("You can now manually change the screen brightness");
@@ -356,10 +351,10 @@ public class Toggles extends PreferenceActivity implements Runnable {
             return false; //package not found
         }
 
-        if(pacInfo != null){
-            for(ActivityInfo actInfo : pacInfo.receivers){
+        if (pacInfo != null) {
+            for (ActivityInfo actInfo : pacInfo.receivers) {
                 //test if recevier is exported. if so, we can toggle GPS.
-                if(actInfo.name.equals("com.android.settings.widget.SettingsAppWidgetProvider") && actInfo.exported){
+                if (actInfo.name.equals("com.android.settings.widget.SettingsAppWidgetProvider") && actInfo.exported) {
                     return true;
                 }
             }
@@ -405,12 +400,12 @@ public class Toggles extends PreferenceActivity implements Runnable {
         if (silentOrVibrateMode != mRingerMode.isChecked() || force) {
             mRingerMode.setChecked(silentOrVibrateMode);
             mVibrate.setChecked(silentOrVibrateMode);
-            if(silentOrVibrateMode) {
+            if (silentOrVibrateMode) {
             	mRingerMode.setSummary("Phone is Now Silent");
             	mVibrate.setSummary("Phone Will Now Vibrate");
             	ringerVol.setEnabled(false);
             	ringerVol.setProgress(0);
-            }else {
+            } else {
             	mRingerMode.setSummary("Phone is Now Audible");
             	mVibrate.setSummary("Phone Will Not Vibrate");
             	ringerVol.setEnabled(true);
@@ -432,9 +427,9 @@ public class Toggles extends PreferenceActivity implements Runnable {
         
         boolean vibeState = false;
         
-        if(vibeSetting == AudioManager.VIBRATE_SETTING_ON) {
+        if (vibeSetting == AudioManager.VIBRATE_SETTING_ON) {
         	vibeState = true;
-        }else if(vibeSetting == AudioManager.VIBRATE_SETTING_OFF) {
+        } else if (vibeSetting == AudioManager.VIBRATE_SETTING_OFF) {
         	vibeState = false;
         }
 		return vibeState;
@@ -445,10 +440,10 @@ public class Toggles extends PreferenceActivity implements Runnable {
         boolean gpsEnabled = Settings.Secure.isLocationProviderEnabled(
                 res, LocationManager.GPS_PROVIDER);
         
-        if(gpsEnabled){
+        if (gpsEnabled){
         	mGps.setChecked(true);
         	mGps.setSummary("GPS On");
-        }else {
+        } else {
         	mGps.setChecked(false);
         	mGps.setSummary("GPS Off");
         }
@@ -460,53 +455,6 @@ public class Toggles extends PreferenceActivity implements Runnable {
         mRingerHandler.removeCallbacks(this);
         mRingerHandler.post(this);
     }
-    
-//    @Override  
-//    public boolean onKeyDown(int keyCode, KeyEvent event)  
-//    {  
-//    	boolean keyDown = event.getAction() == KeyEvent.ACTION_DOWN;
-////    	SeekBarPreference ringerVolS = (SeekBarPreference) findPreference("ringerVol");
-////    	switch(keyCode){
-////    	case KeyEvent.KEYCODE_VOLUME_DOWN:
-////    		if(keyDown){
-////    			ringerVolS.incrementProgressBy(-1);
-////    			postSetVolume(ringerVol.getProgress());
-////    		}
-////    		return true;
-////    	case KeyEvent.KEYCODE_VOLUME_UP:
-////    		if(keyDown){
-////    			ringerVolS.incrementProgressBy(1);
-////    			postSetVolume(ringerVol.getProgress());
-////    		}
-////    		return true;
-////    	default:
-////    		return false;
-////    	}
-//    	//if one of the volume keys were pressed  
-//        if(keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == KeyEvent.KEYCODE_VOLUME_UP)  
-//        {  
-//        	if(event.getAction() == KeyEvent.ACTION_DOWN) {
-//            //change the seek bar progress indicator position 
-//        	ringerVol.setProgress(mAudioManager.getStreamVolume(AudioManager.STREAM_RING));
-//        	Log.i("ASRC", ""+mAudioManager.getStreamVolume(AudioManager.STREAM_RING));
-//        	Log.i("RVC", ""+ringerVol.getProgress());
-////        	if(mAudioManager.getStreamVolume(AudioManager.STREAM_RING) == 0) {
-////        		ringerVol.setProgress(0);
-////        		mRingerMode.setChecked(true);
-////        		mRingerMode.setSummary("Phone is Now Silent");
-////        		if(getPhoneVibrateSettingValue()) {
-////        			mVibrate.setChecked(true);
-////        			mVibrate.setSummary("Phone Will Now Vibrate");
-////        		}else {
-////        			mVibrate.setChecked(false);
-////        			mVibrate.setSummary("Phone Will Not Vibrate");
-////        		}
-////        	}
-//        	}
-//        }  
-//        //propagate the key event  
-//        return super.onKeyDown(keyCode, event);  
-//    }
 
 	public void run() {
 		mAudioManager.setStreamVolume(AudioManager.STREAM_RING, mLastProgress, AudioManager.FLAG_SHOW_UI + AudioManager.FLAG_PLAY_SOUND);

@@ -11,6 +11,7 @@ public class NSettings extends Activity implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.main);
         
         View prefsB = findViewById(R.id.prefsB);
@@ -20,17 +21,16 @@ public class NSettings extends Activity implements OnClickListener {
     }
 
 	public void onClick(View v) {
-		switch(v.getId()){
-		case R.id.aboutB:
-			Intent i = new Intent(this, About.class);
-			startActivity(i);
-			break;
-			
-		case R.id.prefsB:
-			Intent i1 = new Intent(this, Prefs.class);
-			startActivity(i1);
-			break;
+		switch (v.getId()) {
+			case R.id.aboutB:
+				Intent i = new Intent(this, About.class);
+				startActivity(i);
+				break;
+
+			case R.id.prefsB:
+				Intent i1 = new Intent(this, Prefs.class);
+				startActivity(i1);
+				break;
 		}
-		
 	}
 }

@@ -21,21 +21,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 		<activity android:name=".Prefs" android:label="@string/prefsL" android:theme="@android:style/Theme.Material.Dialog"></activity>
 		<activity android:name=".About" android:label="@string/aboutL" android:theme="@android:style/Theme.Material.Dialog"></activity>
 		<activity android:name=".Toggles" android:label="@string/togglesL" android:theme="@android:style/Theme.Material.Dialog" android:launchMode="singleInstance"></activity>
+
 		<receiver android:name=".BootupReceiver">
-		<intent-filter>
-		<action
-		android:name="android.intent.action.BOOT_COMPLETED" />
-		<category android:name="android.intent.category.HOME" />
-		</intent-filter>
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
 		</receiver>
+
 		<service android:name=".NotifyService">
-		<intent-filter>
-		<action
-		android:name="com.brandon.labs.nsettings.NotifyService" />
-		</intent-filter>
+            <intent-filter>
+                <action
+                    android:name="com.brandon.labs.nsettings.NotifyService" />
+            </intent-filter>
 		</service>
     </application>
 </manifest>
