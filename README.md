@@ -6,8 +6,6 @@ This is a Android application built originally for Gingerbread (2.3 API 10). It 
 
 ## Developers
 
-**This project requires API levels 8 and 10 to be installed**
-
 Import the project into Android Studio to compile and run the project.
 
 ## License
