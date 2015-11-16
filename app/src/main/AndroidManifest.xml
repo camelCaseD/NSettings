@@ -15,15 +15,15 @@
 
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".NSettings"
-                  android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar">
+                  android:label="@string/app_name" android:theme="@android:style/Theme.Material.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-		<activity android:name=".Prefs" android:label="@string/prefsL" android:theme="@android:style/Theme.Dialog"></activity>
-		<activity android:name=".About" android:label="@string/aboutL" android:theme="@android:style/Theme.Dialog"></activity>
-		<activity android:name=".Toggles" android:label="@string/togglesL" android:theme="@android:style/Theme.Dialog" android:launchMode="singleInstance"></activity>
+		<activity android:name=".Prefs" android:label="@string/prefsL" android:theme="@android:style/Theme.Material.Dialog"></activity>
+		<activity android:name=".About" android:label="@string/aboutL" android:theme="@android:style/Theme.Material.Dialog"></activity>
+		<activity android:name=".Toggles" android:label="@string/togglesL" android:theme="@android:style/Theme.Material.Dialog" android:launchMode="singleInstance"></activity>
 		<receiver android:name=".BootupReceiver">
 		<intent-filter>
 		<action
