@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 8
+    compileSdkVersion 22
     buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.camelCaseD.nsettings"
-        minSdkVersion 5
-        targetSdkVersion 8
+        minSdkVersion 22
+        targetSdkVersion 22
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_5
             targetCompatibility JavaVersion.VERSION_1_5

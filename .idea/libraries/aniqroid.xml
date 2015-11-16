@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="aniqroid">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/src/main/java/libs/aniqroid.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
