@@ -13,5 +13,4 @@
     <PreferenceCategory android:title="Display Settings" android:key="displayCat">
     	<CheckBoxPreference android:title="Auto screen brightness" android:summary="When checked will automatically detect screen brightness" android:key="autoScreen" />
     </PreferenceCategory>
-    
 </PreferenceScreen>
